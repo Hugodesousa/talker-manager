@@ -34,7 +34,7 @@ app.get('/talker/:id', async (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  // const { email, password } = req.body;
   // if (email === 'email@email.com' && password === '123456') {
     res.status(HTTP_OK_STATUS).json({ token: randomtoken() });
   // }
