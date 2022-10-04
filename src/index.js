@@ -24,7 +24,6 @@ app.get('/talker', async (_req, res) => {
 });
 
 app.get('/talker/:id', async (req, res) => {
-  // const { id } = req.params;
   const talkers = JSON.parse(await fs.readFile(pathTalker));
   const id = Number(req.params.id);
   const talker = talkers.find((t) => t.id === id);
@@ -35,12 +34,7 @@ app.get('/talker/:id', async (req, res) => {
 });
 
 app.post('/login', autentication, (req, res) => {
-  const { email, password } = req.body;
-  // if (email === 'email@email.com' && password === '123456') {
     res.status(HTTP_OK_STATUS).json({ token: randomtoken() });
-  // }
-  // res.status(501).json({ message: 'not' });
-
 });
 
 app.listen(PORT, () => {
