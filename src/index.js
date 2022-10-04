@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs').promises;
 const path = require('path');
 const randomtoken = require('./utils/token');
+const autentication = require('./utils/autentication');
 
 const pathTalker = path.resolve(__dirname, 'talker.json');
 
@@ -33,12 +34,13 @@ app.get('/talker/:id', async (req, res) => {
   res.status(HTTP_OK_STATUS).json(talker);
 });
 
-app.post('/login', (req, res) => {
-  // const { email, password } = req.body;
+app.post('/login', autentication, (req, res) => {
+  const { email, password } = req.body;
   // if (email === 'email@email.com' && password === '123456') {
     res.status(HTTP_OK_STATUS).json({ token: randomtoken() });
   // }
   // res.status(501).json({ message: 'not' });
+
 });
 
 app.listen(PORT, () => {
