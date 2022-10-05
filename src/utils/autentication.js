@@ -1,3 +1,5 @@
+const HTTP_BAD_STATUS = 400;
+
 const checkEmail = (emailInput) => {
   const validEmail = new RegExp(
     /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i,
@@ -8,16 +10,20 @@ const checkEmail = (emailInput) => {
 const autentication = (req, res, next) => {
   const { email, password } = req.body;
   if (!email) {
-    return res.status(400).json({ message: 'O campo "email" é obrigatório' });
+    return res.status(HTTP_BAD_STATUS).json({ 
+      message: 'O campo "email" é obrigatório' });
   }
   if (!checkEmail(email)) {
-    return res.status(400).json({ message: 'O "email" deve ter o formato "email@email.com"' });
+    return res.status(HTTP_BAD_STATUS).json({ 
+      message: 'O "email" deve ter o formato "email@email.com"' });
   }
   if (!password) {
-    return res.status(400).json({ message: 'O campo "password" é obrigatório' });
+    return res.status(HTTP_BAD_STATUS).json({ 
+      message: 'O campo "password" é obrigatório' });
   }
   if (password.length < 6) {
-    return res.status(400).json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
+    return res.status(HTTP_BAD_STATUS).json({ 
+      message: 'O "password" deve ter pelo menos 6 caracteres' });
   }
   next();
 };

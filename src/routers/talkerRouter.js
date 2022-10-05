@@ -10,7 +10,10 @@ const { validName,
 const router = express.Router();
 
 const pathTalker = path.resolve(__dirname, '..', 'talker.json');
+
 const HTTP_OK_STATUS = 200;
+const HTTP_CREAT_OK = 201;
+const HTTP_NOT_FOUND = 404;
 
 router.get('/talker', async (_req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker));
@@ -22,7 +25,7 @@ router.get('/talker/:id', async (req, res) => {
   const id = Number(req.params.id);
   const talker = talkers.find((t) => t.id === id);
   if (!talker) {
-    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+    res.status(HTTP_NOT_FOUND).json({ message: 'Pessoa palestrante não encontrada' });
   }
   res.status(HTTP_OK_STATUS).json(talker);
 });
@@ -39,7 +42,7 @@ validTalker2, async (req, res) => {
 
   talkers.push(newTalker);
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
-  res.status(201).json(newTalker);
+  res.status(HTTP_CREAT_OK).json(newTalker);
 });
 
 module.exports = router;

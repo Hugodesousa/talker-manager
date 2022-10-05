@@ -1,37 +1,18 @@
-const checkDia = (dia) => {
-  const test = dia > 0 && dia < 31;
-  if (test) {
-    return true;
-  }
-  return false;
-};
+const checkDia = (dia) => dia > 0 && dia <= 31;
 
-const checkMes = (mes) => {
-  const test = mes > 0 && mes < 12;
-  if (test) {
-    return true;
-  }
-  return false;
-};
+const checkMes = (mes) => mes > 0 && mes <= 12;
 
-const checkAno = (ano) => {
-  const test = ano > 1000 && ano < 4444;
-  if (test) {
-    return true;
-  }
-  return false;
-};
+const checkAno = (ano) => ano > 1000 && ano < 4444;
 
-const checkData = (data) => {
-  const dateTest = data.split('/');
-  const dia = +dateTest[0];
-  const mes = +dateTest[1];
-  const ano = +dateTest[2];
+const checkData = (date) => {
+  const dateTest = date.split('/');
+  const dateSplit = {
+    dia: +dateTest[0],
+    mes: +dateTest[1],
+    ano: +dateTest[2],
+  };
 
-  if (checkDia(dia) && checkMes(mes) && checkAno(ano)) {
-    return true;
-  }
-  return false;
+  return checkDia(dateSplit.dia) && checkMes(dateSplit.mes) && checkAno(dateSplit.ano);
 };
 
 module.exports = checkData;
