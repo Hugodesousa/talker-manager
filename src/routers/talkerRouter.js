@@ -1,7 +1,11 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
-const { validName, validAge, validToken, validTalker1, validTalker2 } = require('../utils/validTalker');
+const { validName, 
+  validAge, 
+  validToken, 
+  validTalker1, 
+  validTalker2 } = require('../utils/validTalker');
 
 const router = express.Router();
 
@@ -33,7 +37,6 @@ validTalker2, async (req, res) => {
   const newTalker = req.body;
   newTalker.id = talkers[talkers.length - 1].id + 1;
 
-  console.log(newTalker);
   talkers.push(newTalker);
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
   res.status(201).json(newTalker);
