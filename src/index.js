@@ -1,11 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs').promises;
-const path = require('path');
 const randomtoken = require('./utils/token');
 const autentication = require('./utils/autentication');
-
-const pathTalker = path.resolve(__dirname, 'talker.json');
+const talkerRouter = require('./routers/talkerRouter');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,20 +15,7 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
-app.get('/talker', async (_req, res) => {
-  const talkers = JSON.parse(await fs.readFile(pathTalker));
-  res.status(HTTP_OK_STATUS).json([...talkers]);
-});
-
-app.get('/talker/:id', async (req, res) => {
-  const talkers = JSON.parse(await fs.readFile(pathTalker));
-  const id = Number(req.params.id);
-  const talker = talkers.find((t) => t.id === id);
-  if (!talker) {
-    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-  }
-  res.status(HTTP_OK_STATUS).json(talker);
-});
+app.use(talkerRouter);
 
 app.post('/login', autentication, (req, res) => {
     res.status(HTTP_OK_STATUS).json({ token: randomtoken() });
