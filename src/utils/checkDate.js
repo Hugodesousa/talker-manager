@@ -22,20 +22,13 @@ const checkAno = (ano) => {
   return false;
 };
 
-const checkAll = (dia, mes, ano) => {
-  if (checkDia(dia) && checkMes(mes) && checkAno(ano)) {
-    return true;
-  }
-  return false;
-};
-
 const checkData = (data) => {
   const dateTest = data.split('/');
   const dia = +dateTest[0];
   const mes = +dateTest[1];
   const ano = +dateTest[2];
 
-  if (checkAll(dia, mes, ano)) {
+  if (checkDia(dia) && checkMes(mes) && checkAno(ano)) {
     return true;
   }
   return false;
