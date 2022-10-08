@@ -63,13 +63,15 @@ const validTalker1 = (req, res, next) => {
 
 const validTalker2 = (req, res, next) => {
   const { rate } = req.body.talk;
-  if (!rate) {
-    return res.status(HTTP_BAD_STATUS).json({ message: 'O campo "rate" é obrigatório' });
-  }
-  if (rate < 0 || rate > 5) {
+
+  const newRate = Number(rate);
+  if (newRate < 1 || newRate > 5) {
     return res.status(HTTP_BAD_STATUS).json({ 
       message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
-  }
+    }
+    if (!newRate) {
+      return res.status(HTTP_BAD_STATUS).json({ message: 'O campo "rate" é obrigatório' });
+    }
   next();
 };
 

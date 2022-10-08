@@ -30,12 +30,36 @@ router.get('/talker/:id', async (req, res) => {
   res.status(HTTP_OK_STATUS).json(talker);
 });
 
+// router.get('/talker/search?q=')
+
+router.put('/talker/:id',
+validToken,
+validName,
+validAge,
+validTalker1,
+validTalker2, 
+async (req, res) => {
+  const talkers = JSON.parse(await fs.readFile(pathTalker));
+  const { name, age, talk, id } = req.params;
+  talkers.forEach((talker) => {
+    if (talker.id === +id) {
+      console.log('teste');
+      talker.name = name;
+      talker.age = age;
+      talker.talk = talk;
+    }
+  });
+  await fs.writeFile(pathTalker, JSON.stringify(talkers));
+  res.status(HTTP_OK_STATUS).json(newEditTalker);
+});
+
 router.post('/talker', 
 validToken, 
 validName, 
 validAge, 
 validTalker1, 
-validTalker2, async (req, res) => {
+validTalker2, 
+async (req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker));
   const newTalker = req.body;
   newTalker.id = talkers[talkers.length - 1].id + 1;
@@ -45,4 +69,19 @@ validTalker2, async (req, res) => {
   res.status(HTTP_CREAT_OK).json(newTalker);
 });
 
-module.exports = router;
+router.delete('/talker/:id', validToken, async (req, res) => {
+  // const id = Number(req.params.id);
+  const talkers = JSON.parse(await fs.readFile(pathTalker));
+  console.log(talkers);
+
+  // const editTalker = talkers.find((talker) => talker.id === +req.params.id);
+  
+  // if (talker) {
+  //   const index = talkers.indexOf(talker);
+  //   console.log(index);
+  //   talkers.splice(index, 1);
+  // }
+  res.status(204).end();
+});
+
+module.exports = router; 
