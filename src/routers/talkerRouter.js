@@ -1,3 +1,4 @@
+const { log } = require('console');
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
@@ -40,16 +41,17 @@ validTalker1,
 validTalker2, 
 async (req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker));
-  const { name, age, talk, id } = req.params;
-  talkers.forEach((talker) => {
-    if (talker.id === +id) {
-      console.log('teste');
-      talker.name = name;
-      talker.age = age;
-      talker.talk = talk;
-    }
-  });
-  await fs.writeFile(pathTalker, JSON.stringify(talkers));
+  const { params } = req;
+  // const { name, age, talk } = req.body;
+  const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
+  const { id } = talkers[findTalkers];
+  const newEditTalker = { id, ...req.body };
+  // const remove = talkers.splice(findTalkers);
+  const remove = talkers.filter((el) => el.id !== +params.id);
+  remove.push(newEditTalker);
+  console.log(remove);
+
+  await fs.writeFile(pathTalker, JSON.stringify(remove));
   res.status(HTTP_OK_STATUS).json(newEditTalker);
 });
 
