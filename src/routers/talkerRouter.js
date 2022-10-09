@@ -68,18 +68,12 @@ async (req, res) => {
 });
 
 router.delete('/talker/:id', validToken, async (req, res) => {
-  // const id = Number(req.params.id);
   const talkers = JSON.parse(await fs.readFile(pathTalker));
-  console.log(talkers);
+  const { params } = req;
+  const remove = talkers.filter((el) => el.id !== +params.id);
 
-  // const editTalker = talkers.find((talker) => talker.id === +req.params.id);
-  
-  // if (talker) {
-  //   const index = talkers.indexOf(talker);
-  //   console.log(index);
-  //   talkers.splice(index, 1);
-  // }
-  res.status(204).end();
+  await fs.writeFile(pathTalker, JSON.stringify(remove));
+  res.status(204).json(remove);
 });
 
 module.exports = router; 
