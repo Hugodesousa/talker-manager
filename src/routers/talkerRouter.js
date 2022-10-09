@@ -1,4 +1,3 @@
-const { log } = require('console');
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
@@ -42,14 +41,11 @@ validTalker2,
 async (req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker));
   const { params } = req;
-  // const { name, age, talk } = req.body;
   const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
   const { id } = talkers[findTalkers];
   const newEditTalker = { id, ...req.body };
-  // const remove = talkers.splice(findTalkers);
   const remove = talkers.filter((el) => el.id !== +params.id);
   remove.push(newEditTalker);
-  console.log(remove);
 
   await fs.writeFile(pathTalker, JSON.stringify(remove));
   res.status(HTTP_OK_STATUS).json(newEditTalker);
