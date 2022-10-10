@@ -1,4 +1,4 @@
-const checkData = require('./checkDate');
+const checkData = require('../utils/checkDate');
 
 const HTTP_BAD_STATUS = 400;
 const HTTP_BAD_AUTHORIZATION = 401;

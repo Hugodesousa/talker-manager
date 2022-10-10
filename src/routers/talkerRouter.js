@@ -5,7 +5,7 @@ const { validName,
   validAge, 
   validToken, 
   validTalker1, 
-  validTalker2 } = require('../utils/validTalker');
+  validTalker2 } = require('../middlewares/validTalker');
 
 const router = express.Router();
 
@@ -30,26 +30,49 @@ router.get('/talker/:id', async (req, res) => {
   res.status(HTTP_OK_STATUS).json(talker);
 });
 
-// router.get('/talker/search?q=')
+router.get('/talker/search', validToken, async (req, res) => {
+  console.log(req.query);
+  res.status(200).end();
+});
+
+// router.put('/talker/:id',
+// validToken,
+// validName,
+// validAge,
+// validTalker1,
+// validTalker2, 
+// async (req, res) => {
+//   const talkers = JSON.parse(await fs.readFile(pathTalker));
+//   const { params } = req;
+//   const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
+//   const { id } = talkers[findTalkers];
+//   const newEditTalker = { id, ...req.body };
+
+//   const remove = talkers.filter((el) => el.id !== +params.id);
+//   remove.push(newEditTalker);
+
+//   await fs.writeFile(pathTalker, JSON.stringify(remove));
+//   res.status(HTTP_OK_STATUS).json(newEditTalker);
+// });
 
 router.put('/talker/:id',
-validToken,
-validName,
-validAge,
-validTalker1,
-validTalker2, 
-async (req, res) => {
-  const talkers = JSON.parse(await fs.readFile(pathTalker));
-  const { params } = req;
-  const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
-  const { id } = talkers[findTalkers];
-  const newEditTalker = { id, ...req.body };
-  const remove = talkers.filter((el) => el.id !== +params.id);
-  remove.push(newEditTalker);
+  validToken,
+  validName,
+  validAge,
+  validTalker1,
+  validTalker2,
+  async (req, res) => {
+    const talkers = JSON.parse(await fs.readFile(pathTalker));
+    const { params } = req;
+    const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
+    const talkerSelected = talkers[findTalkers];
+    talkerSelected.name = req.body.name;
+    talkerSelected.age = req.body.age;
+    talkerSelected.talk = req.body.talk;
 
-  await fs.writeFile(pathTalker, JSON.stringify(remove));
-  res.status(HTTP_OK_STATUS).json(newEditTalker);
-});
+    await fs.writeFile(pathTalker, JSON.stringify(talkers));
+    res.status(HTTP_OK_STATUS).json(talkerSelected);
+  });
 
 router.post('/talker', 
 validToken, 
