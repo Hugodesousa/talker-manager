@@ -20,6 +20,14 @@ router.get('/talker', async (_req, res) => {
   res.status(HTTP_OK_STATUS).json([...talkers]);
 });
 
+router.get('/talker/search', validToken, async (req, res) => {
+  const talkers = JSON.parse(await fs.readFile(pathTalker));
+  if (req.query.q.length < 1) res.status(200).json(talkers);
+  const filter = talkers.filter((talker) => talker.name.includes(req.query.q));
+  if (filter.length < 1) res.status(200).json([]);
+  res.status(200).json(filter);
+});
+
 router.get('/talker/:id', async (req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker));
   const id = Number(req.params.id);
@@ -29,32 +37,6 @@ router.get('/talker/:id', async (req, res) => {
   }
   res.status(HTTP_OK_STATUS).json(talker);
 });
-
-router.get('/talker/search', validToken, async (req, res) => {
-  console.log(req.query);
-  res.status(200).end();
-});
-
-// router.put('/talker/:id',
-// validToken,
-// validName,
-// validAge,
-// validTalker1,
-// validTalker2, 
-// async (req, res) => {
-//   const talkers = JSON.parse(await fs.readFile(pathTalker));
-//   const { params } = req;
-//   const findTalkers = talkers.findIndex((talker) => talker.id === +params.id);
-//   const { id } = talkers[findTalkers];
-//   const newEditTalker = { id, ...req.body };
-
-//   const remove = talkers.filter((el) => el.id !== +params.id);
-//   remove.push(newEditTalker);
-
-//   await fs.writeFile(pathTalker, JSON.stringify(remove));
-//   res.status(HTTP_OK_STATUS).json(newEditTalker);
-// });
-
 router.put('/talker/:id',
   validToken,
   validName,
