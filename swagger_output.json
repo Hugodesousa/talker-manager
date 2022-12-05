@@ -1,0 +1,244 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": "Aplicação de cadastro de talkers (palestrantes) em que será possível cadastrar, visualizar, pesquisar, editar e excluir informações | Application for registration of talkers (speakers) in which it will be possible to register, view, search, edit and delete information"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Deve retornar um status code 200 se a aplicação estiver funcionando corretamente | It should return a status code 200 if the application is working properly.",
+        "summary": "Testa se aplicação está funcionando corretamente | Tests whether the application is working correctly.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "Endpoint de login, deve retornar um token após receber um email e password no body da requisição | Login endpoint, must return a token after receiving an email and password in the request body.",
+        "summary": "Faz login na aplicação e retorna um token aleatório | Log in to the application and return a random token",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "email@email.com"
+                },
+                "password": {
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email e password válidos | Valid email and password"
+          },
+          "400": {
+            "description": "Algo errado nos campos email ou senha no body da requisição | Something wrong with the email or password fields in the request body"
+          }
+        }
+      }
+    },
+    "/talker": {
+      "get": {
+        "description": "Lista com todas as pessoas cadastradas | List of all registered people",
+        "summary": "Lista com todas as pessoas cadastradas | List of all registered people",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista com todas as pessoas cadastradas | List of all registered people"
+          }
+        }
+      },
+      "post": {
+        "description": "Endpoint para cadastrar novos palestrantes | Endpoint to register new speakers.",
+        "summary": "Cadastrar novos palestrantes | Register new speakers.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Deve ser preenchido com um token aleatório de 16 dígitos, gerado ao fazer login com um email e senha nos formatos certos | It must be populated with a random 16-digit token, generated when logging in with an email and password in the right formats.",
+            "example": "AbpdsZOGLImocQ5Y"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "06"
+                },
+                "name": {
+                  "example": "João Fulano"
+                },
+                "age": {
+                  "example": "19"
+                },
+                "talk": {
+                  "example": {
+                    "watchedAt": "22/02/2021",
+                    "rate": 5
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Palestrantes cadastrado com sucesso | Successfully Registered Speakers"
+          },
+          "400": {
+            "description": "Item obrigatório no body obrigatório  inexistente ou inválido | Required item in missing or invalid body"
+          },
+          "401": {
+            "description": "Token obrigatório  inexistente ou inválido | Missing or invalid mandatory token"
+          }
+        }
+      }
+    },
+    "/talker/search": {
+      "get": {
+        "description": "Busca palestrantes por correspondência entre a query string passada na url e os nomes dos palestrantes | Speaker search by correspondence between the query string passed in the url and the names of the speakers.",
+        "summary": "Busca palestrantes por  query string | Speakers search by query string",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string",
+            "description": "Parâmetro de busca da url | url search parameter",
+            "example": "He"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Deve ser preenchido com um token aleatório de 16 dígitos, gerado ao fazer login com um email e senha nos formatos certos | It must be populated with a random 16-digit token, generated when logging in with an email and password in the right formats.",
+            "example": "AbpdsZOGLImocQ5Y"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um [] com as pessoas encontradas pela busca ou todas as pessoas se não forem passados paramentros na url | Returns a [] with the people found by the search or all people if no parameters are passed in the url"
+          }
+        }
+      }
+    },
+    "/talker/{id}": {
+      "get": {
+        "description": "Buscar palestrantes pelo id | Search speakers by id.",
+        "summary": "Buscar palestrantes pelo id | Search speakers by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "example": "2",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pessoa encontrada | Person found."
+          },
+          "404": {
+            "description": "Pessoa não encontrada | person not found."
+          }
+        }
+      },
+      "put": {
+        "description": "Endpoint para editar dados de  pessoas cadastradas | EEndpoint to edit data of registered people",
+        "summary": "Endpoint para editar dados de  pessoas cadastrada | Endpoint to edit data of registered people",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "example": "3",
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Deve ser preenchido com um token aleatório de 16 dígitos, gerado ao fazer login com um email e senha nos formatos certos | It must be populated with a random 16-digit token, generated when logging in with an email and password in the right formats.",
+            "example": "AbpdsZOGLImocQ5Y"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Ricardo Edit Xavier filho"
+                },
+                "age": {
+                  "example": "35"
+                },
+                "talk": {
+                  "example": {
+                    "watchedAt": "23/10/2020",
+                    "rate": 5
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Edição concluida com sucesso | Edit completed successfully"
+          },
+          "400": {
+            "description": "Campos obrigatórios inexistentes ou inválidos | Missing or invalid required fields"
+          },
+          "401": {
+            "description": "Token obrigatório  inexistente ou inválido | Missing or invalid mandatory token"
+          }
+        }
+      },
+      "delete": {
+        "description": "Endpoint para deletar pessoas cadastradas | Endpoint to delete registered people.",
+        "summary": "Endpoint para deletar pessoas cadastradas | Endpoint to delete registered people.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "2"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Deve ser preenchido com um token aleatório de 16 dígitos, gerado ao fazer login com um email e senha nos formatos certos | It must be populated with a random 16-digit token, generated when logging in with an email and password in the right formats.",
+            "example": "AbpdsZOGLImocQ5Y"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Pessoa apagada | Deleted person."
+          },
+          "401": {
+            "description": "Token obrigatório  inexistente ou inválido | Missing or invalid mandatory token"
+          }
+        }
+      }
+    }
+  }
+}

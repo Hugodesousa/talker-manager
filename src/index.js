@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
 const randomtoken = require('./utils/token');
 const autentication = require('./middlewares/autentication');
 const talkerRouter = require('./routers/talkerRouter');
+const swaggerFile = require('../swagger_output.json');
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,6 +22,8 @@ app.post('/login', autentication, (req, res) => {
 });
 
 app.use(talkerRouter);
+
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(PORT, () => {
   console.log('Online');
