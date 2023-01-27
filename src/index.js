@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const randomtoken = require('./utils/token');
@@ -10,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const HTTP_OK_STATUS = 200;
-const PORT = '3000';
+const PORT = process.env.PORT || 3000;
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
