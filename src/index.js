@@ -2,12 +2,14 @@ const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 const randomtoken = require('./utils/token');
 const autentication = require('./middlewares/autentication');
 const talkerRouter = require('./routers/talkerRouter');
 const swaggerFile = require('../swagger_output.json');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 const HTTP_OK_STATUS = 200;
