@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": "Aplicação de cadastro de talkers (palestrantes) em que será possível cadastrar, visualizar, pesquisar, editar e excluir informações | Application for registration of talkers (speakers) in which it will be possible to register, view, search, edit and delete information"
   },
-  "host": "localhost:3000",
+  "host": "https://talker-manager-production.up.railway.app/",
   "basePath": "/",
   "schemes": [
     "http"
