@@ -8,7 +8,7 @@
   "host": "https://talker-manager-production.up.railway.app",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
