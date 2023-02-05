@@ -16,9 +16,9 @@ linkedin: https://www.linkedin.com/in/hugo-de-sousa-dev/
 
 
 
-![img](./project.png)
+Os endpoints da API foram documentados com swagger que pode ser acessado abaixo:
 
-[Acesse o site aqui.](https://hugodesousa.github.io/trybe-tunes/#/)
+[API Swagger.](https://talker-manager-production.up.railway.app/doc/)
 
 # Tecnologias usadas
 
