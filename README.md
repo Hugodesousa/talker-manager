@@ -5,7 +5,7 @@
 # Contexto
  
 
-Esta API fornece uma solução moderna e avançada para o gerenciamento de informações de pessoas, desenvolvida com o framework Express e a linguagem de programação Node.js. Ela oferece uma variedade de recursos para realizar as operações CRUD (Criar, Ler, Atualizar e Deletar) de forma eficiente e segura.
+Esta API fornece uma solução para o gerenciamento de informações de pessoas, desenvolvida com o framework Express e a linguagem de programação Node.js. Ela oferece uma variedade de recursos para realizar as operações CRUD (Criar, Ler, Atualizar e Deletar) de forma eficiente e segura.
 
 Com esta API, é possível facilmente realizar operações de pesquisar, cadastrar, editar e excluir pessoas cadastradas, garantindo assim a organização e segurança dos dados. O armazenamento dos dados é feito através do uso do módulo fs, que escreve em um arquivo Json, proporcionando uma implementação simples e rápida para a necessidade. Além disso, é possível acessar a documentação construída no swagger disponível na rota "/doc" para uma melhor compreensão e utilização da API.
 
